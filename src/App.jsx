@@ -44,7 +44,7 @@ function App() {
         <section>
           <h3 className="text-2xl font-bold">Projects</h3>
           <div className="mt-6 grid md:grid-cols-2 gap-6">
-            {projectCard("IoT Traffic Light", "Smart city prototype developed during Orange Summer Challenge.", "Node-RED, ESP32, Electronics, CNC Machine, 3D Printer", "/projects/traffic.jpg")}
+            {projectCard("iNgeyaa - AIoT Traffic Light System", "Smart city prototype developed during Orange Summer Challenge.", "Node-RED, ESP32, Electronics, CNC Machine, 3D Printer", "/projects/traffic.jpg")}
             {projectCard("Mobile Makerspace Training", "STEM bootcamps on IoT & robotics across Cameroon.", "Arduino, IoT kits", "/projects/makerspace.jpg")}
             {projectCard("Satellite-enabled IoT Prototypes", "Low-cost nanosatellite-based IoT solutions.", "Satellite comms, Embedded systems", "/projects/satellite.jpg")}
             {projectCard("K3D Print, Cameroon", "3D Design and Rendering of clients’ products and projects. 3D Printing of students’ final year projects and clients’ prototypes.", "3D Printer, CAD", "/projects/k3d.png")}
@@ -91,7 +91,53 @@ function App() {
             </div>
           </div>
 
-          <ContactForm />
+          {/* Netlify-enabled contact form */}
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            className="p-6 rounded-lg bg-zinc-900/20"
+          >
+            {/* Hidden input required for Netlify */}
+            <input type="hidden" name="form-name" value="contact" />
+
+            {/* Honeypot field for bots */}
+            <p className="hidden">
+              <label>
+                Don’t fill this out: <input name="bot-field" />
+              </label>
+            </p>
+
+            <label className="block text-sm text-zinc-300">Name</label>
+            <input
+              name="name"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+              placeholder="Your name"
+            />
+
+            <label className="block text-sm text-zinc-300 mt-3">Email</label>
+            <input
+              name="email"
+              type="email"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+              placeholder="Your email"
+            />
+
+            <label className="block text-sm text-zinc-300 mt-3">Message</label>
+            <textarea
+              name="message"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
+              placeholder="How can I help?"
+            />
+
+            <button
+              type="submit"
+              className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
+            >
+              Send Message
+            </button>
+          </form>
         </section>
       </main>
 
@@ -112,81 +158,6 @@ function App() {
   )
 }
 
-function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-
-  function encode(data) {
-    return Object.keys(data)
-      .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": form.getAttribute("name"),
-        name: form.name.value,
-        email: form.email.value,
-        message: form.message.value,
-      }),
-    })
-      .then(() => setSubmitted(true))
-      .catch((error) => alert(error));
-  };
-
-  if (submitted) {
-    return <p className="text-neon-green mt-4">✅ Thanks! Your message has been sent.</p>;
-  }
-
-  return (
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      onSubmit={handleSubmit}
-      className="p-6 rounded-lg bg-zinc-900/20"
-    >
-      <input type="hidden" name="form-name" value="contact" />
-
-      <label className="block text-sm text-zinc-300">Name</label>
-      <input
-        name="name"
-        className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
-        placeholder="Your name"
-        required
-      />
-
-      <label className="block text-sm text-zinc-300 mt-3">Email</label>
-      <input
-        name="email"
-        type="email"
-        className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
-        placeholder="Your email"
-        required
-      />
-
-      <label className="block text-sm text-zinc-300 mt-3">Message</label>
-      <textarea
-        name="message"
-        className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
-        placeholder="How can I help?"
-        required
-      />
-
-      <button
-        type="submit"
-        className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
-      >
-        Send Message
-      </button>
-    </form>
-  );
-}
 
 function SkillCard({ title, tools, icon }) {
   return (
