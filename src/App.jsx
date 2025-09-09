@@ -99,24 +99,45 @@ function App() {
             data-netlify-honeypot="bot-field"
             className="p-6 rounded-lg bg-zinc-900/20"
           >
+            {/* Required hidden input for Netlify */}
             <input type="hidden" name="form-name" value="contact" />
 
+            {/* Honeypot (hidden from users) */}
             <p className="hidden">
-              <label>
-                Don’t fill this out: <input name="bot-field" />
-              </label>
+              <label>Don’t fill this out: <input name="bot-field" /></label>
             </p>
 
             <label className="block text-sm text-zinc-300">Name</label>
-            <input name="name" placeholder="Your name" />
+            <input
+              name="name"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+              placeholder="Your name"
+              required
+            />
 
             <label className="block text-sm text-zinc-300 mt-3">Email</label>
-            <input name="email" type="email" placeholder="Your email" />
+            <input
+              name="email"
+              type="email"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+              placeholder="Your email"
+              required
+            />
 
             <label className="block text-sm text-zinc-300 mt-3">Message</label>
-            <textarea name="message" placeholder="How can I help?" />
+            <textarea
+              name="message"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
+              placeholder="How can I help?"
+              required
+            />
 
-            <button type="submit">Send Message</button>
+            <button
+              type="submit"
+              className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
+            >
+              Send Message
+            </button>
           </form>
         </section>
       </main>
