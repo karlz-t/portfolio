@@ -99,10 +99,8 @@ function App() {
             data-netlify-honeypot="bot-field"
             className="p-6 rounded-lg bg-zinc-900/20"
           >
-            {/* Required hidden input for Netlify */}
             <input type="hidden" name="form-name" value="contact" />
 
-            {/* Honeypot (hidden from users) */}
             <p className="hidden">
               <label>Don’t fill this out: <input name="bot-field" /></label>
             </p>
