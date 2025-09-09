@@ -91,15 +91,43 @@ function App() {
             </div>
           </div>
 
-          <form name="contact" method="POST" date-netlify="true" className="p-6 rounded-lg bg-zinc-900/20">
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            className="p-6 rounded-lg bg-zinc-900/20"
+          >
+            {/* Hidden input required for Netlify */}
             <input type="hidden" name="form-name" value="contact" />
+
             <label className="block text-sm text-zinc-300">Name</label>
-            <input name="name" className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm" placeholder="Your name" />
+            <input
+              name="name"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+              placeholder="Your name"
+            />
+
             <label className="block text-sm text-zinc-300 mt-3">Email</label>
-            <input name="email" type="email" className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm" placeholder="Your email" />
+            <input
+              name="email"
+              type="email"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+              placeholder="Your email"
+            />
+
             <label className="block text-sm text-zinc-300 mt-3">Message</label>
-            <textarea name="message" className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28" placeholder="How can I help?" />
-            <button type="submit" className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black">Send Message</button>
+            <textarea
+              name="message"
+              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
+              placeholder="How can I help?"
+            />
+
+            <button
+              type="submit"
+              className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
+            >
+              Send Message
+            </button>
           </form>
         </section>
       </main>
