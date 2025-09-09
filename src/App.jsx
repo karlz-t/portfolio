@@ -91,44 +91,7 @@ function App() {
             </div>
           </div>
 
-          <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            className="p-6 rounded-lg bg-zinc-900/20"
-          >
-            {/* Hidden input required for Netlify */}
-            <input type="hidden" name="form-name" value="contact" />
-
-            <label className="block text-sm text-zinc-300">Name</label>
-            <input
-              name="name"
-              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
-              placeholder="Your name"
-            />
-
-            <label className="block text-sm text-zinc-300 mt-3">Email</label>
-            <input
-              name="email"
-              type="email"
-              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
-              placeholder="Your email"
-            />
-
-            <label className="block text-sm text-zinc-300 mt-3">Message</label>
-            <textarea
-              name="message"
-              className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
-              placeholder="How can I help?"
-            />
-
-            <button
-              type="submit"
-              className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
-            >
-              Send Message
-            </button>
-          </form>
+          <ContactForm />
         </section>
       </main>
 
@@ -147,6 +110,82 @@ function App() {
       </footer>
     </div>
   )
+}
+
+function ContactForm() {
+  const [submitted, setSubmitted] = useState(false);
+
+  function encode(data) {
+    return Object.keys(data)
+      .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({
+        "form-name": form.getAttribute("name"),
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value,
+      }),
+    })
+      .then(() => setSubmitted(true))
+      .catch((error) => alert(error));
+  };
+
+  if (submitted) {
+    return <p className="text-neon-green mt-4">✅ Thanks! Your message has been sent.</p>;
+  }
+
+  return (
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      onSubmit={handleSubmit}
+      className="p-6 rounded-lg bg-zinc-900/20"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+
+      <label className="block text-sm text-zinc-300">Name</label>
+      <input
+        name="name"
+        className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+        placeholder="Your name"
+        required
+      />
+
+      <label className="block text-sm text-zinc-300 mt-3">Email</label>
+      <input
+        name="email"
+        type="email"
+        className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
+        placeholder="Your email"
+        required
+      />
+
+      <label className="block text-sm text-zinc-300 mt-3">Message</label>
+      <textarea
+        name="message"
+        className="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
+        placeholder="How can I help?"
+        required
+      />
+
+      <button
+        type="submit"
+        className="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
+      >
+        Send Message
+      </button>
+    </form>
+  );
 }
 
 function SkillCard({ title, tools, icon }) {
