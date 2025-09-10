@@ -30,53 +30,63 @@
         </div>
       </div>
 
-      <!-- Netlify-enabled contact form -->
       <form
-        name="contact"
-        method="POST"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
+        id="contactForm"
         class="p-6 rounded-lg bg-zinc-900/20"
+        onsubmit="sendMail(event)"
       >
-        <input type="hidden" name="form-name" value="contact" />
-
-        <!-- Honeypot -->
-        <p class="hidden">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-
         <label class="block text-sm text-zinc-300">Name</label>
         <input
-          name="name"
+          type="text"
+          id="name"
+          required
           class="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
           placeholder="Your name"
-          required
         />
 
-        <label class="block text-sm text-zinc-300 mt-3">Email</label>
-        <input
-          name="email"
-          type="email"
-          class="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm"
-          placeholder="Your email"
+        <label class="block text-sm text-zinc-300 mt-3">Opportunity</label>
+        <select
+          id="opportunity"
+          class="mt-1 w-full p-2 rounded bg-zinc-900 border border-zinc-800 text-sm text-zinc-300"
           required
-        />
+        >
+          <option value="">-- Select an option --</option>
+          <option value="Collaboration">Collaboration</option>
+          <option value="Training">Training</option>
+          <option value="Speaking Engagement">Speaking Engagement</option>
+          <option value="Consulting">Consulting</option>
+          <option value="Other">Other</option>
+        </select>
 
         <label class="block text-sm text-zinc-300 mt-3">Message</label>
         <textarea
-          name="message"
+          id="message"
+          required
           class="mt-1 w-full p-2 rounded bg-transparent border border-zinc-800 text-sm h-28"
           placeholder="How can I help?"
-          required
         ></textarea>
 
         <button
           type="submit"
           class="mt-4 px-4 py-2 rounded bg-neon-cyan text-black"
         >
-          Send Message
+          Send Email
         </button>
       </form>
+
+      <script>
+        function sendMail(event) {
+          event.preventDefault();
+
+          const name = document.getElementById("name").value.trim();
+          const opportunity = document.getElementById("opportunity").value.trim();
+          const message = document.getElementById("message").value.trim();
+
+          const subject = encodeURIComponent(`${opportunity} - from ${name}` || "Portfolio Message");
+          const body = encodeURIComponent(message);
+          window.location.href = `mailto:kkonarski42@gmail.com?subject=${subject}&body=${body}`;
+        }
+      </script>
     </section>
 
     <footer
